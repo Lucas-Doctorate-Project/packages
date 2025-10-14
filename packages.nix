@@ -8,9 +8,16 @@
 with pkgs;
 
 rec {
+  batsim = batsim420;
+  batsim420 = callPackage ./pkgs/batsim/batsim420.nix { inherit redox; simgrid = simgrid-light; intervalset = intervalset-light; };
+
+  intervalset = callPackage ./pkgs/intervalset { };
+  intervalset-light = intervalset.override { withoutBoostPropagation = true; };
+  
+  redox = callPackage ./pkgs/redox { };
+  
   simgrid = simgrid-400;
   simgrid-light = simgrid-400light;
-
   simgrid-400 = callPackage ./pkgs/simgrid/simgrid400.nix {};
   simgrid-400light = simgrid-400.override { minimalBindings = true; withoutBin = true; withoutBoostPropagation = true; buildPythonBindings = false; modelCheckingSupport = false; };
 }
