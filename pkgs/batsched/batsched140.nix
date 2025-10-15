@@ -31,6 +31,17 @@ stdenv.mkDerivation rec {
   hardeningDisable = if debug then [ "fortify" ] else [];
   dontStrip = debug;
 
+  # Fix library paths for runtime on macOS
+  postFixup = lib.optionalString stdenv.isDarwin ''
+    for bin in $out/bin/*; do
+      # Get current loguru reference and replace with absolute path
+      old_ref=$(otool -L $bin | grep libloguru | awk '{print $1}' | head -1)
+      if [ -n "$old_ref" ]; then
+        install_name_tool -change "$old_ref" ${loguru}/lib/libloguru.dylib $bin
+      fi
+    done
+  '';
+
   meta = with lib; {
     description = "Batsim C++ scheduling algorithms.";
     longDescription = "A set of scheduling algorithms for Batsim (and WRENCH).";

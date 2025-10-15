@@ -18,13 +18,20 @@ stdenv.mkDerivation rec {
     lib.optionalString debug " -g" +
     lib.optionalString optimize " -O2";
   dontStrip = debug;
+
+  libExt = if stdenv.isDarwin then "dylib" else "so";
+
   buildPhase = ''
-    $CXX -std=c++11 -o libloguru.so -shared -pthread ${cFlags} loguru.cpp
+    $CXX -std=c++11 -o libloguru.${libExt} -shared -pthread ${cFlags} loguru.cpp
   '';
 
   installPhase = ''
     mkdir -p $out/lib
-    cp libloguru.so $out/lib/
+    cp libloguru.${libExt} $out/lib/
+    ${lib.optionalString stdenv.isDarwin ''
+      # Create a symlink with .so extension for compatibility
+      ln -s $out/lib/libloguru.dylib $out/lib/libloguru.so
+    ''}
 
     mkdir -p $out/include
     cp ./loguru.hpp $out/include/
