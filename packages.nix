@@ -23,10 +23,12 @@ rec {
 
   procset = callPackage ./pkgs/procset {};
 
-  pybatsim-core = pybatsim-core-400;
-  pybatsim-functional = pybatsim-functional-400;
-  pybatsim-core-400 = callPackage ./pkgs/pybatsim/core400.nix { inherit procset; };
-  pybatsim-functional-400 = callPackage ./pkgs/pybatsim/functional400.nix { pybatsim-core = pybatsim-core-400; };
+  pybatsim = callPackage ./pkgs/pybatsim/pybatsim321.nix { inherit procset; };
+
+  # pybatsim-core = pybatsim-core-400;
+  # pybatsim-functional = pybatsim-functional-400;
+  # pybatsim-core-400 = callPackage ./pkgs/pybatsim/core400.nix { inherit procset; };
+  # pybatsim-functional-400 = callPackage ./pkgs/pybatsim/functional400.nix { pybatsim-core = pybatsim-core-400; };
   
   redox = callPackage ./pkgs/redox {};
   
