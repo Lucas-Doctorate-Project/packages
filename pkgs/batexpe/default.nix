@@ -11,11 +11,11 @@
   src = fetchFromGitHub {
     owner = "Lucas-Doctorate-Project";
     repo = "batexpe";
-    rev = "4c98fe8254d34399aa57262d2f4584aed49d64ea";
-    sha256 = "sha256-pwWq05SFcC4QsVReGSTyyS+lGUwxegjdj9IaFUgaehA=";
+    rev = "9f5a8ab3983586ccdf6b6214a48badf8501a6c46";
+    sha256 = "sha256-ZCSwL/8Duwu9ECID/P8btVSHIwVZQx9yF6AZ8gbrMEs=";
   };
 
-  vendorHash = "sha256-5YlQHGjobHOFdOSt9yqox4q+JJT+GTJuIzutdNqMUdE=";
+  vendorHash = "sha256-p7F4CWJW6a2tqe2fHh/9gKMabzx4Vo4L0q7b8MWTCQY=";
 
   propagatedBuildInputs = [bash coreutils]
     ++ lib.optionals stdenv.isLinux [procps iproute2];
